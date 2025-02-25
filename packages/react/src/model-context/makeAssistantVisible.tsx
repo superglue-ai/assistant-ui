@@ -42,8 +42,9 @@ const edit = tool({
   execute: async ({ editId, value }) => {
     const escapedEditId = CSS.escape(editId);
     const el = document.querySelector(`[data-edit-id='${escapedEditId}']`);
-    if (el instanceof HTMLInputElement) {
+    if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
       el.value = value;
+      el.dispatchEvent(new Event('change'));
       // todo make adjustable
       await new Promise((resolve) => setTimeout(resolve, 2000));
       return {};
